@@ -1,3 +1,9 @@
+package ariel.kcg.goingo.kcgmath;
+
+/**
+ * Created by VLad Landa on 12/22/2016.
+ */
+
 public class Quaternion {
 
     private double _w, _i, _j, _k;
@@ -12,12 +18,12 @@ public class Quaternion {
         this._i = _i;
         this._j = _j;
         this._k = _k;
-        
+
     }
     public double get_k() {
         return _k;
     }
-    public void set_k(double _k) {
+    public void set_K(double _k) {
         this._k = _k;
     }
     public double get_J() {
@@ -39,6 +45,28 @@ public class Quaternion {
         this._w = w;
     }
 
+    public void set(double w,double i,double j,double k){
+        this.set_W(w);
+        this.set_I(i);
+        this.set_J(j);
+        this.set_K(k);
+    }
+
+    public Quaternion getInstance(){
+        return new Quaternion(this);
+    }
+
+    public void set(double[] sensor){
+        set(sensor[0],sensor[1],sensor[2],sensor[3]);
+    }
+    public void set(float[] sensor){
+        set(sensor[0],sensor[1],sensor[2],sensor[3]);
+    }
+
+    public double getNorm(){
+        return Math.sqrt(_w*_w+_i*_i+_j*_j+_k*_k);
+    }
+
     public Quaternion getConjugate(){
         return new Quaternion(_w,-_i,-_j,-_k);
     }
@@ -56,7 +84,7 @@ public class Quaternion {
         Vector3d fin = (uScale.plus(vScale)).plus(vCrossU);
         result.set_I(fin.getX());
         result.set_J(fin.getY());
-        result.set_k(fin.getZ());
+        result.set_K(fin.getZ());
         return result;
     }
 
@@ -70,6 +98,9 @@ public class Quaternion {
 
     @Override
     public String toString() {
-        return "Quaternion{" + _w + "," + _i + "," + _j + "," + _k + '}';
+        return "Quaternion{ " + String.format( "%.5f", _w ) + " , "
+                + String.format( "%.5f", _i ) + " , "
+                + String.format( "%.5f", _j ) + " , "
+                + String.format( "%.5f", _k ) + " }";
     }
 }
